@@ -7,6 +7,21 @@ namespace tap {
   int failing = 0;
   int counter = 1;
 
+  void throwFail(void (*fptr)(), std::string str) {
+    try {
+      fptr();
+      pass(true, str);
+    }
+    catch (const char* msg) {
+      pass(false, str);
+      std::cout << "  --- \n";
+      std::cout << "  message: '" << msg << "'\n";
+      std::cout << "  severity: fail\n";
+      std::cout << "  ...\n";
+    }
+  }
+
+
   void pass(bool pass, std::string str) {
     if (pass) {
       std::cout << "ok " << counter << " " << str << "\n";
